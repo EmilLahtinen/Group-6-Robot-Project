@@ -4,7 +4,7 @@ import lejos.utility.Delay;
 
 public class OwnMotorTest {
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
 
         //EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.C);
         //EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
