@@ -22,14 +22,12 @@ public class UltrasonicSensor {
         // can provide multiple values, therefore to keep consistency, I'm using sampleprovider
         float[] sample = new float[distance.sampleSize()];
 
-         SharedData sd1 = new SharedData();
-        sd1.Distance = sample[0];
-
         // Keep displaying the distance, until user presses a button
         while (!Button.ESCAPE.isDown())
         {
             // Get the curRent distnce reading from the US sensor
             distance.fetchSample(sample, 0);
+            SharedData.Distance = sample[0];
             
             // Display the distance on the LCD screen
             LCD.clear();
