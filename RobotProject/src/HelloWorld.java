@@ -1,4 +1,3 @@
-//this file for testing purpose might remove it later
 package src;
 
 import lejos.hardware.Button;
