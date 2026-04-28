@@ -26,6 +26,23 @@ public class Controller {
         long obstacleTimeRight = 0;
         long maxTime = 0;
 
+        //PID values
+        double setPoint = 0.09; //Adjust this intensity
+        double dt = 1; //Time between control cycles
+        double gainP = 1500; //Adjust this
+        double gainI = 50; //Adjust this
+        double gainD = 20; //Adjust this
+        double prevError = 0;
+            double error = 0;
+            double proportional = 0;
+            double integral = 0;
+            double derivative = 0;
+            double output = 0;
+            
+            long now = 0;
+            long lastTime = 0;
+            
+
         Thread lsThread = new Thread(ls);
         Thread usThread = new Thread(uss);
 
@@ -36,7 +53,7 @@ public class Controller {
 
         //Start delay. Needed or the robot will start moving before the sensors activate
         Delay.msDelay(8000);
-        motors.forward();
+        lastTime = System.currentTimeMillis();
         
         while (!Button.ESCAPE.isDown()){
             //Obstacle detection
@@ -143,7 +160,7 @@ public class Controller {
                             break;
                         }
                             Delay.msDelay(10);
-                            if(SharedData.intensity < 0.08){  //Set intensity to 0.015? for the real deal
+                            if(SharedData.intensity < 0.09){  //Set intensity to 0.015? for the real deal
                                 SharedData.lineDetected = true;
                             }
                     }
@@ -162,10 +179,10 @@ public class Controller {
                 avoidStep = 0;
                 SharedData.lineDetected = false;
                 motors.obstacleTurnRight();
-                if(SharedData.intensity < 0.08){ //Make intensities 0.015? for the real deal
+                if(SharedData.intensity < 0.09){ //Make intensities 0.015? for the real deal
                     firstCheck = true;
                 }
-                if(SharedData.intensity >= 0.08 && abort == true && firstCheck == true){
+                if(SharedData.intensity >= 0.09 && abort == true && firstCheck == true){
                     abort = false;
                     avoidingRight = false;
                     avoiding = false;
@@ -219,7 +236,7 @@ public class Controller {
                             break;
                         }
                             Delay.msDelay(10);
-                            if(SharedData.intensity < 0.08){  //Set intensity to 0.015? for the real deal
+                            if(SharedData.intensity < 0.09){  //Set intensity to 0.015? for the real deal
                                 SharedData.lineDetected = true;
                             }
                     }
@@ -238,7 +255,7 @@ public class Controller {
                 avoidStep = 0;
                 SharedData.lineDetected = false;
                 motors.obstacleTurnLeft();
-                if(SharedData.intensity < 0.08 && abort == true){ //Make intensity 0.015? for the real deal
+                if(SharedData.intensity < 0.09 && abort == true){ //Make intensity 0.015? for the real deal
                     abort = false;
                     avoidingLeft = false;
                     avoiding = false;
@@ -257,11 +274,35 @@ public class Controller {
             lsThread.setPriority(8);
             }
             //Make intensities 0.015? for real deal
-            if(SharedData.intensity >= 0.08 && avoiding == false && abort == false){
-                motors.turnLeft();
-            }
-            if ((SharedData.intensity < 0.08 && avoiding == false && abort == false)){
-                motors.turnRight();
+            //if(SharedData.intensity >= 0.09 && avoiding == false && abort == false){
+              //  motors.turnLeft();
+            //}
+            //if ((SharedData.intensity < 0.09 && avoiding == false && abort == false)){
+             //   motors.turnRight();
+           // }
+            if(avoiding == false && abort == false){ //PID control
+                now = System.currentTimeMillis();
+                dt = (now - lastTime) / 1000.0;
+                lastTime = now;
+                if(dt <= 0){
+                    dt = 0.001;
+                }
+
+                double processValue = SharedData.intensity;
+                error = setPoint - processValue;
+                proportional = gainP * error;
+                integral += error * dt;
+                derivative = gainD * ((error - prevError)/dt);
+                output = proportional + (gainI * integral) + derivative;
+                if (output > 720){
+                    output = 720;
+                }
+                if (output < -720){
+                    output = -720;
+                }
+                motors.correction = output;
+                motors.pidDrive();
+                prevError = error;
             }
         }
     }

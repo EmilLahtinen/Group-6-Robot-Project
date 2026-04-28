@@ -1,4 +1,3 @@
-//this is for test purposes done by imalka and emil 
 package src;
 import lejos.hardware.Button;
 

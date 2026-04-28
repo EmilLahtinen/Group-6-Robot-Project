@@ -1,4 +1,3 @@
-//this code is for testing purposes and this code is done by imalka
 package src;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;

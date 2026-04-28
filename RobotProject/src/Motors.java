@@ -7,6 +7,8 @@ public class Motors {
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.C);
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
+    double baseSpeed = 180;
+    double correction = 0;
 
     public void forward(){
         leftMotor.setSpeed(360);   // Set to 360 for real deal
@@ -41,5 +43,17 @@ public class Motors {
         rightMotor.setSpeed(135);   // Set to 135 for real deal
         rightMotor.forward();
         leftMotor.forward();
+    }
+    public void pidDrive(){
+        double leftSpeed = baseSpeed + correction;
+        double rightSpeed = baseSpeed - correction;
+
+        leftSpeed = Math.max(0, Math.min(360, leftSpeed));
+        rightSpeed = Math.max(0, Math.min(360, rightSpeed));
+        
+        leftMotor.setSpeed((int)leftSpeed);
+        rightMotor.setSpeed((int)rightSpeed);
+        leftMotor.forward();
+        rightMotor.forward();
     }
 }

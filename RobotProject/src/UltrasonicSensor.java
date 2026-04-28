@@ -4,18 +4,17 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.Button;
-import lejos.robotics.SampleProvider;  
-// SampleProvider allows sensors to return data in a standard format
-// Example: distance values from ultrasonic sensor
-                                        
+import lejos.robotics.SampleProvider;   // allows the sensor to return the samples or data
+                                        // e.g., for getting distance data from sonic sensor etc
 
 public class UltrasonicSensor implements Runnable {
+
 
 
     @Override
     public void run(){
 
-       // Create ultrasonic sensor instance connected to sensor port S2
+        // Creating an instance of US sensor at port 2
 
         EV3UltrasonicSensor ultrasonicSensor = new EV3UltrasonicSensor(SensorPort.S2);
         
@@ -51,5 +50,4 @@ public class UltrasonicSensor implements Runnable {
         ultrasonicSensor.close();
     }
 
-} 
-//this code is done by emil
+}
