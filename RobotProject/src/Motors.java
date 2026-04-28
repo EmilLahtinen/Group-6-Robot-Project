@@ -5,34 +5,41 @@ import lejos.hardware.port.MotorPort;
 
 public class Motors {
     
-    EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.C); //Create motor objects connected to EV3 ports
+    EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.C);
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
 
-    //Move both motors forward
     public void forward(){
-        leftMotor.setSpeed(360);   // degrees per second
-        rightMotor.setSpeed(360);
-     
-    //start spinning forward   
+        leftMotor.setSpeed(360);   // Set to 360 for real deal
+        rightMotor.setSpeed(360);   // Set to 360 for real deal
         leftMotor.forward();
         rightMotor.forward();
     }
-   
-    //stop both motors immidiatly
     public void stop(){
         leftMotor.stop();
         rightMotor.stop();
     }
+    public void obstacleTurnLeft(){
+        rightMotor.setSpeed(90);
+        leftMotor.setSpeed(90);
+        rightMotor.forward();
+        leftMotor.backward();
+    }
+    public void obstacleTurnRight(){
+        leftMotor.setSpeed(90);
+        rightMotor.setSpeed(90);
+        rightMotor.backward();
+        leftMotor.forward();
+    }
     public void turnLeft(){
+        rightMotor.setSpeed(360);   // Set to 360 for real deal
+        leftMotor.setSpeed(135);    // Set to 135 for real deal
         rightMotor.forward();
         leftMotor.forward();
-        rightMotor.setSpeed(360);
-        leftMotor.stop();
     }
     public void turnRight(){
+        leftMotor.setSpeed(360);    // Set to 360 for real deal
+        rightMotor.setSpeed(135);   // Set to 135 for real deal
         rightMotor.forward();
         leftMotor.forward();
-        leftMotor.setSpeed(360);
-        rightMotor.stop();
     }
 }

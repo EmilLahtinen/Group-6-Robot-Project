@@ -1,0 +1,30 @@
+Group 6 Robot Project documentation
+
+Roles:
+
+Emil Lahtinen: Programmer
+Imalka Siriwardena: Assistant Programmer and Project manager
+
+Main functions:
+
+Light Sensor
+
+The light sensor detects the intensity of the light reflected back into it. Is run on a thread, so it can run at all times.
+
+Ultrasonic Sensor
+
+The ultrasonic sensor detects objects within a short range in its field of view. Is run on a thread, so it can run at all times.
+
+Motors
+
+The motors class handles commands sent to the motors by the controller class.
+
+
+Shared Data
+
+Shared data contains the intensity and distance values as well as whether we consider an object close enough to start avoiding (objectDetected) and a state setter for detecting the line during avoidance maneuvers.
+
+
+Controller
+
+The controller class takes the inputs from shared data and sets them as needed. It sends orders to the motors class to control the robot's movement like we want to.

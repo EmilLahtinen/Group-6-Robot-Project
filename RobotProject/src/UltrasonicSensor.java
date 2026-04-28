@@ -7,9 +7,13 @@ import lejos.hardware.Button;
 import lejos.robotics.SampleProvider;   // allows the sensor to return the samples or data
                                         // e.g., for getting distance data from sonic sensor etc
 
-public class UltrasonicSensor {
+public class UltrasonicSensor implements Runnable {
 
-    public static void main(String[] args) {
+
+
+    @Override
+    public void run(){
+
         // Creating an instance of US sensor at port 2
 
         EV3UltrasonicSensor ultrasonicSensor = new EV3UltrasonicSensor(SensorPort.S2);
@@ -27,15 +31,15 @@ public class UltrasonicSensor {
         {
             // Get the curRent distnce reading from the US sensor
             distance.fetchSample(sample, 0);
-            SharedData.Distance = sample[0];
+            SharedData.distance = sample[0];
             
             // Display the distance on the LCD screen
             LCD.clear();
-            LCD.drawString("Dist: " + sample[0] + " meters", 0, 0);
+            LCD.drawString("Distance: " + SharedData.distance, 0, 1);
             
             // Refresh display every 100 ms
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

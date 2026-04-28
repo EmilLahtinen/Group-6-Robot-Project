@@ -1,1 +1,1 @@
-"C:\Program Files\Java\jdk1.7.0_80\bin\jar" -cfe OwnMotorTest.jar src.OwnMotorTest -C . src
+"C:\Program Files\Java\jdk1.7.0_80\bin\jar" -cfe Controller.jar src.Controller -C . src

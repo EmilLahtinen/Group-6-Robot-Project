@@ -1,4 +1,3 @@
-//enhanced version of teachers code
 package src;
 
 import lejos.hardware.sensor.EV3ColorSensor;
@@ -7,35 +6,38 @@ import lejos.hardware.lcd.LCD;
 import lejos.hardware.Button;
 import lejos.robotics.SampleProvider;
 
-public class LightSensor {
+public class LightSensor implements Runnable{
 
-    public static void main(String[] args)
-    {
-        EV3ColorSensor colorSensor  = new EV3ColorSensor(SensorPort.S3); //  Create color sensor object on EV3 sensor port S3
-        SampleProvider light        = colorSensor.getAmbientMode(); //Set sensor mode to measure ambient light (general brightness)
+
+
+    @Override
+    public void run(){
+
+            EV3ColorSensor colorSensor  = new EV3ColorSensor(SensorPort.S3);
+            SampleProvider light        = colorSensor.getAmbientMode();
         
-        // Create an array to hold the sensor data
-        float[] sample = new float[light.sampleSize()];
+            // Create an array to hold the sensor data
+            float[] sample = new float[light.sampleSize()];
 
-        // Continuously display the light intensity until a button is pressed
-        while (!Button.ESCAPE.isDown())                 // Exit if the ESCAPE button is pressed
-        {
-            // Get the current light intensity reading from the sensor
-            light.fetchSample(sample, 0);               // 0 is the index where data will be stored
-            SharedData.Intensity = sample[0];
-
-            // Display the light intensity value on the LCD screen
-            LCD.clear();
-            LCD.drawString("Light Intensity: " + (int)(sample[0] * 100) + "%", 0, 0);  // Display as percentage
-
-            //Small delay so values don’t update too fast
-            try 
+            // Continuously display the light intensity until a button is pressed
+            while (!Button.ESCAPE.isDown())                 // Exit if the ESCAPE button is pressed
             {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                // Get the current light intensity reading from the sensor
+                light.fetchSample(sample, 0);               // 0 is the index where data will be stored
+                SharedData.intensity = (float)sample[0];
+
+                // Display the light intensity value on the LCD screen
+                LCD.clear();
+                LCD.drawString("Intensity: " + (float)(SharedData.intensity), 0, 0);
+            
+                try 
+                {
+                    Thread.sleep(10);
+            }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
         colorSensor.close();
     }
+
 }

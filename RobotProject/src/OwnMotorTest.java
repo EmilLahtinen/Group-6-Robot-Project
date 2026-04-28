@@ -12,12 +12,13 @@ public class OwnMotorTest {
         Motors motors = new Motors();
 
         motors.forward();
+        Delay.msDelay(1000);
+        motors.obstacleTurnLeft();
         Delay.msDelay(2000);
-        motors.turnLeft();
-        Delay.msDelay(2000);
-        motors.turnRight();
+        motors.obstacleTurnRight();
         Delay.msDelay(2000);
         motors.forward();
+        Delay.msDelay(1000);
         motors.stop();
         
         //leftMotor.close();
