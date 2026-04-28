@@ -12,9 +12,10 @@ public class LightSensor implements Runnable{
 
     @Override
     public void run(){
-
+            
+        // Initialize the EV3 color sensor on sensor port S3
             EV3ColorSensor colorSensor  = new EV3ColorSensor(SensorPort.S3);
-            SampleProvider light        = colorSensor.getAmbientMode();
+            SampleProvider light        = colorSensor.getAmbientMode(); // Set the sensor to ambient light mode (measures reflected/ambient light intensity)
         
             // Create an array to hold the sensor data
             float[] sample = new float[light.sampleSize()];
@@ -32,12 +33,14 @@ public class LightSensor implements Runnable{
             
                 try 
                 {
+                    //// Small delay to prevent CPU overload and stabilize readings
                     Thread.sleep(10);
             }catch (InterruptedException e) {
+                    // // Print error if thread sleep is interrupted
                     e.printStackTrace();
                 }
             }
-        colorSensor.close();
+        colorSensor.close(); // Close the sensor properly to free hardware resources
     }
 
-}
+} //this code is done by imalka modified by Emil
