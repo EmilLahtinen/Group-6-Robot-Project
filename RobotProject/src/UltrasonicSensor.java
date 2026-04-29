@@ -8,7 +8,8 @@ import lejos.robotics.SampleProvider;   // allows the sensor to return the sampl
                                         // e.g., for getting distance data from sonic sensor etc
 
 public class UltrasonicSensor implements Runnable {
-
+//we use runnable because the US must continuely keep cheking the distance while robot is moving and follow the line avoiding obstcles
+  //with out runnable programe might get stuck
 
 
     @Override
@@ -37,7 +38,7 @@ public class UltrasonicSensor implements Runnable {
             LCD.clear();
             LCD.drawString("Distance: " + SharedData.distance, 0, 1);
             
-            // Refresh display every 100 ms
+            // Refresh display every 10ms
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
