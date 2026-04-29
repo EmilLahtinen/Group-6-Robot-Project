@@ -1,18 +1,30 @@
-## Getting Started
+Group 6 Robot Project documentation
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Roles:
 
-## Folder Structure
+Emil Lahtinen: Programmer
+Imalka Siriwardena: Assistant Programmer and Project manager
 
-The workspace contains two folders by default, where:
+Main functions:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Light Sensor
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+The light sensor detects the intensity of the light reflected back into it. Is run on a thread, so it can run at all times.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Ultrasonic Sensor
 
-## Dependency Management
+The ultrasonic sensor detects objects within a short range in its field of view. Is run on a thread, so it can run at all times.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Motors
+
+The motors class handles commands sent to the motors by the controller class.
+
+
+Shared Data
+
+Shared data contains the intensity and distance values as well as whether we consider an object close enough to start avoiding (objectDetected) and a state setter for detecting the line during avoidance maneuvers.
+
+
+Controller
+
+The controller class takes the inputs from shared data and sets them as needed. It sends orders to the motors class to control the robot's movement like we want to.
