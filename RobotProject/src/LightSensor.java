@@ -46,3 +46,4 @@ public class LightSensor implements Runnable{
     }
 
 }
+//this part is done by imalka and debugged emil
