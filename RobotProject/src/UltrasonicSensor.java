@@ -33,7 +33,11 @@ public class UltrasonicSensor implements Runnable {
         {
             // Get the curRent distnce reading from the US sensor
             distance.fetchSample(sample, 0);
-            SharedData.distance = sample[0];
+            SharedData.distance = sample[0]; ///* Save distance into SharedData
+             ///so Controller.java can use it
+             //for obstacle detection
+            
+           
             
             // Display the distance on the LCD screen for debugging
             LCD.clear();
