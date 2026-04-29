@@ -6,9 +6,10 @@ import lejos.utility.Delay;
 public class Controller {
     public static void main(String[] args) {
 
-        Motors motors = new Motors();
+        Motors motors = new Motors(); //create motors and sensors
         LightSensor ls = new LightSensor();
         UltrasonicSensor uss = new UltrasonicSensor();
+        //flag used for obstecleavoidence 
         boolean avoiding = false;
         boolean avoidingLeft = false;
         boolean avoidingRight = false;
@@ -19,14 +20,14 @@ public class Controller {
         boolean firstCheck = false;
         boolean maxTimeStarted = false;
         boolean abort = false;
-        int avoidStep = 0;
+        int avoidStep = 0; //stop system for obsetcle avoidance
 
         long measureStart = 0;
         long obstacleTimeLeft = 0;
         long obstacleTimeRight = 0;
         long maxTime = 0;
 
-        //PID values
+        //PID values //this part is done by emil
         double setPoint = 0.07; //Adjust this intensity
         double dt = 1; //Time between control cycles
         double gainP = 2500; //Adjust this
@@ -57,7 +58,7 @@ public class Controller {
         
         while (!Button.ESCAPE.isDown()){
             //Obstacle detection
-            if(SharedData.distance <= 0.15 && avoiding == false){SharedData.obstacle = true; measuringLeft = true;}
+            if(SharedData.distance <= 0.15 && avoiding == false){SharedData.obstacle = true; measuringLeft = true;} // If obstacle is closer than 15 cm and robot is not already avoiding
             else{SharedData.obstacle = false;}
 
             //Obstacle avoidance: measure left
