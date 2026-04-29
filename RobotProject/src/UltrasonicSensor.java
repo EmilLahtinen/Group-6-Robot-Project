@@ -1,3 +1,4 @@
+//this part has done by imalka
 package src;
 
 import lejos.hardware.sensor.EV3UltrasonicSensor;
@@ -34,7 +35,7 @@ public class UltrasonicSensor implements Runnable {
             distance.fetchSample(sample, 0);
             SharedData.distance = sample[0];
             
-            // Display the distance on the LCD screen
+            // Display the distance on the LCD screen for debugging
             LCD.clear();
             LCD.drawString("Distance: " + SharedData.distance, 0, 1);
             
