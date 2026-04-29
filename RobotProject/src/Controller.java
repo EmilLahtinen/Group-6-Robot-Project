@@ -27,11 +27,11 @@ public class Controller {
         long maxTime = 0;
 
         //PID values
-        double setPoint = 0.09; //Adjust this intensity
+        double setPoint = 0.07; //Adjust this intensity
         double dt = 1; //Time between control cycles
-        double gainP = 1500; //Adjust this
+        double gainP = 2500; //Adjust this
         double gainI = 50; //Adjust this
-        double gainD = 20; //Adjust this
+        double gainD = 100; //Adjust this
         double prevError = 0;
             double error = 0;
             double proportional = 0;
@@ -157,10 +157,11 @@ public class Controller {
                     for (int i = 0; i < 200; i++) {
                         if (SharedData.lineDetected == true) {
                             abort = true;
+                            i = 0;
                             break;
                         }
                             Delay.msDelay(10);
-                            if(SharedData.intensity < 0.09){  //Set intensity to 0.015? for the real deal
+                            if(SharedData.intensity < 0.07){  //Set intensity to 0.015? for the real deal
                                 SharedData.lineDetected = true;
                             }
                     }
@@ -179,10 +180,10 @@ public class Controller {
                 avoidStep = 0;
                 SharedData.lineDetected = false;
                 motors.obstacleTurnRight();
-                if(SharedData.intensity < 0.09){ //Make intensities 0.015? for the real deal
+                if(SharedData.intensity < 0.05){ //Make intensities 0.015? for the real deal
                     firstCheck = true;
                 }
-                if(SharedData.intensity >= 0.09 && abort == true && firstCheck == true){
+                if(SharedData.intensity >= 0.05 && abort == true && firstCheck == true){
                     abort = false;
                     avoidingRight = false;
                     avoiding = false;
@@ -191,6 +192,9 @@ public class Controller {
                     obstacleTimeLeft = 0;
                     obstacleTimeRight = 0;
                     measuringComplete = false;
+                    maxTime = 0;
+                    maxTimeStarted = false;
+                    firstCheck = false;
                     continue;
                 }
             }
@@ -233,10 +237,11 @@ public class Controller {
                     for (int i = 0; i < 200; i++) {
                         if (SharedData.lineDetected == true) {
                             abort = true;
+                            i = 0;
                             break;
                         }
                             Delay.msDelay(10);
-                            if(SharedData.intensity < 0.09){  //Set intensity to 0.015? for the real deal
+                            if(SharedData.intensity < 0.05){  //Set intensity to 0.015? for the real deal
                                 SharedData.lineDetected = true;
                             }
                     }
@@ -255,7 +260,10 @@ public class Controller {
                 avoidStep = 0;
                 SharedData.lineDetected = false;
                 motors.obstacleTurnLeft();
-                if(SharedData.intensity < 0.09 && abort == true){ //Make intensity 0.015? for the real deal
+                if(SharedData.intensity < 0.05){ //Make intensities 0.015? for the real deal
+                    firstCheck = true;
+                }
+                if(SharedData.intensity < 0.05 && abort == true && firstCheck == true){ //Make intensity 0.015? for the real deal
                     abort = false;
                     avoidingLeft = false;
                     avoiding = false;
@@ -264,6 +272,9 @@ public class Controller {
                     obstacleTimeLeft = 0;
                     obstacleTimeRight = 0;
                     measuringComplete = false;
+                    maxTime = 0;
+                    maxTimeStarted = false;
+                    firstCheck = false;
                     continue;
                 }
             }
@@ -294,11 +305,11 @@ public class Controller {
                 integral += error * dt;
                 derivative = gainD * ((error - prevError)/dt);
                 output = proportional + (gainI * integral) + derivative;
-                if (output > 720){
-                    output = 720;
+                if (output > 360){
+                    output = 360;
                 }
-                if (output < -720){
-                    output = -720;
+                if (output < -360){
+                    output = -360;
                 }
                 motors.correction = output;
                 motors.pidDrive();

@@ -7,7 +7,7 @@ public class Motors {
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.C);
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
-    double baseSpeed = 180;
+    double baseSpeed = 270;
     double correction = 0;
 
     public void forward(){
