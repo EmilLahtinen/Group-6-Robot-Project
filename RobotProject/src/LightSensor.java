@@ -1,5 +1,10 @@
 package src;
-
+ /*
+     * This class runs as a separate thread.
+     * Its job is to continuously read light intensity
+     * from the EV3 color sensor and store it in SharedData
+     * so the Controller class can use it for line following.
+     */
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.lcd.LCD;
@@ -32,9 +37,9 @@ public class LightSensor implements Runnable{
             
                 try 
                 {
-                    Thread.sleep(10);
+                    Thread.sleep(10); //sleep for 10s
             }catch (InterruptedException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //print error if thread gets interrupted
                 }
             }
         colorSensor.close();
